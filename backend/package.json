@@ -1,0 +1,37 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "This is a todo app made with PERN stack (Postgresql, Express.js, React JS, and Node JS)",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Praphulla06/todo-pern.git"
+  },
+  "keywords": [
+    "todo",
+    "pern",
+    "expressjs",
+    "reactjs",
+    "nodejs",
+    "backend",
+    "react"
+  ],
+  "author": "Praphulla P. Pradhananga",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Praphulla06/todo-pern/issues"
+  },
+  "homepage": "https://github.com/Praphulla06/todo-pern#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "nodemon": "^3.1.0",
+    "pg": "^8.11.5"
+  }
+}
