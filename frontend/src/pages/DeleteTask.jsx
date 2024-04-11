@@ -52,7 +52,7 @@ const DeleteTask = () => {
             <span className="mx-4">
               Are You Sure You Want To Delete This Task?{" "}
             </span>
-            <Check size={28} onClick={deleteTask} />
+            <Check size={28} className="cursor-pointer" onClick={deleteTask} />
           </div>
         </div>{" "}
       </div>
