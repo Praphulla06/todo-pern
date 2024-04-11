@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Pen, Trash, Info, CheckFat } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
+
 const Home = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -14,61 +16,61 @@ const Home = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         setLoading(false);
       });
   }, []);
 
   const completeTask = async (id) => {
-    setLoading(true);
     try {
-      const completedTask = await axios.delete(
-        `http://localhost:5000/deleteTask/${id}`
-      );
-      setLoading(false);
-      window.location.reload()
+      await axios.delete(`http://localhost:5000/deleteTask/${id}`);
+      // Optimally, you would want to filter out the completed task from the tasks state
+      // rather than reloading the page. This makes the UI faster and smoother.
+      setTasks(tasks.filter(task => task.task_id !== id));
     } catch (error) {
-      console.log(error);
-      setLoading(false);
-    } finally {
-      setLoading(false);
+      console.error(error);
     }
   };
+
+  if (loading) {
+    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  }
+
   return (
-    <div>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
+    <div className="flex flex-col items-center">
+      {tasks.length > 0 ? (
         tasks.map((task) => (
           <div
             key={task.task_id}
-            className=" flex justify-around w-[100vw] m-2 p-2 "
+            className="flex justify-between items-center w-full max-w-4xl bg-white shadow-md m-2 p-4 rounded-lg"
           >
-            {" "}
-            <span className="w-[20vw] border-2 border-slate-600 m-1 p-2 rounded">
+            <span className="flex-1 text-sm md:text-lg border-r-2 border-slate-200 pr-4">
               {task.task_name}
-            </span>{" "}
-            <div className="w-[80vw] border-2 border-slate-600 m-1 p-2 rounded flex justify-between">
-              {task.task_description}
-              <div className="flex mx-8">
-                <CheckFat
-                  size={32}
-                  className=" cursor-pointer "
+            </span>
+            <div className="flex-1 flex justify-between items-center pl-4">
+              <p className="text-xs md:text-sm lg:text-base">{task.task_description}</p>
+              <div className="flex space-x-2">
+                <button
                   onClick={() => completeTask(task.task_id)}
-                />
-                <Link to={`/task/${task.task_id}`}>
-                  <Info size={32} />
+                  className="text-green-500 hover:text-green-700"
+                >
+                  <CheckFat size={24} />
+                </button>
+                <Link to={`/task/${task.task_id}`} className="text-blue-500 hover:text-blue-700">
+                  <Info size={24} />
                 </Link>
-                <Link to={`/editTask/${task.task_id}`}>
-                  <Pen size={32} />
+                <Link to={`/editTask/${task.task_id}`} className="text-yellow-500 hover:text-yellow-700">
+                  <Pen size={24} />
                 </Link>
-                <Link to={`/deleteTask/${task.task_id}`}>
-                  <Trash size={32} />
+                <Link to={`/deleteTask/${task.task_id}`} className="text-red-500 hover:text-red-700">
+                  <Trash size={24} />
                 </Link>
               </div>
-            </div>{" "}
+            </div>
           </div>
         ))
+      ) : (
+        <div className="text-center mt-20 text-lg">No tasks found</div>
       )}
     </div>
   );
