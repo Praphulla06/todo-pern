@@ -24,8 +24,6 @@ const Home = () => {
   const completeTask = async (id) => {
     try {
       await axios.delete(`http://localhost:5000/deleteTask/${id}`);
-      // Optimally, you would want to filter out the completed task from the tasks state
-      // rather than reloading the page. This makes the UI faster and smoother.
       setTasks(tasks.filter(task => task.task_id !== id));
     } catch (error) {
       console.error(error);
