@@ -40,8 +40,8 @@ const ShowTask = () => {
           <Link to={`/deleteTask/${task.task_id}`} className="text-red-500 hover:text-red-600">
             <Trash size={32} />
           </Link>
-          {/* Assuming CheckFat is to mark as completed or similar action */}
-          <button onClick={() => {/* Complete task function here */}} className="text-green-500 hover:text-green-600">
+        
+          <button onClick={() => {}} className="text-green-500 hover:text-green-600">
             <CheckFat size={32} />
           </button>
           <Link to={`/task/${task.task_id}`} className="text-gray-500 hover:text-gray-600">
